@@ -230,10 +230,7 @@ Delete `config.yml` and restart the server — the plugin will generate a fresh 
 </details>
 
 ## 📝 Автор | Author
-
-lesha_1
+[lesha_1](https://ru.namemc.com/profile/lesha_1)
 
 ## 📃 Лицензия | License
-
-MIT License. Подробнее см. в файле [LICENSE](https://github.com/lesha231456/BorderAchievePlugin/blob/main/LICENSE).  
 MIT License. See the [LICENSE](https://github.com/lesha231456/BorderAchievePlugin/blob/main/LICENSE) file for details.
