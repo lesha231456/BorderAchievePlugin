@@ -7,8 +7,9 @@
 A Paper 1.21+ plugin that links advancements to dynamic world border expansion and dimension locking.
 
 ---
-==================== РУССКАЯ ВЕРСИЯ ====================
+РУССКАЯ ВЕРСИЯ 
 ---
+
 ## 📖 Описание
 
 **BorderAchieve** превращает получение достижений в механику, влияющую на мир сервера:
@@ -115,9 +116,11 @@ debug: false
 Удалите файл `config.yml` и перезапустите сервер — плагин создаст новый с настройками по умолчанию.
 
 </details>
+
 ---
 ENGLISH VERSION
 ---
+
 ## 📖 Description
 
 **BorderAchieve** turns earning advancements into a world‑affecting mechanic:
