@@ -1,0 +1,26 @@
+name: BorderAchieve
+version: 0.1.8-SNAPSHOT
+main: com.lesha_1.borderachieve.BorderAchievePlugin
+author: lesha_1
+api-version: 1.21
+softdepend: [PlaceholderAPI]
+commands:
+  topborder:
+    description: Open a top/achievement rating | Открыть топ/рейтинг по достижениям
+    aliases: [bordertop]
+  borderreload:
+    description: Reload the plugin files | Перезагрузить файлы плагина
+    permission: borderachieve.admin
+  borderunlock:
+    description: Unlock the world or issue a temporary pass to the player | Разблокировать мир или выдать временный пропуск игроку
+    permission: borderachieve.admin
+    usage: /borderunlock <world> [player]
+  borderlockstatus:
+    description: View the status of blocking worlds | Посмотреть статус блокировки миров
+    permission: borderachieve.admin
+  borderdebug:
+    description: Show the plugin's debugging information | Показать отладочную информацию плагина
+    permission: borderachieve.admin
+  borderachieve:
+    description: Help for the BorderAchieve plugin | Справка по плагину BorderAchieve
+    usage: /borderachieve [help]

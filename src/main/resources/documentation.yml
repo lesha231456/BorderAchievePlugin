@@ -1,0 +1,284 @@
+# ============================================================
+# documentation.yml - BorderAchieve
+# Полное описание всех настроек и команд плагина
+# ============================================================
+
+# ==================== РУССКАЯ ВЕРСИЯ ====================
+
+# BorderAchieve — плагин, который связывает достижения (advancements) игроков
+# с динамическим расширением границ миров и блокировкой измерений.
+#
+# Как только игрок получает достижение, граница в выбранных мирах плавно
+# (или с задержкой) увеличивается на заданное количество блоков.
+# В Незере расширение автоматически уменьшается в 8 раз.
+#
+# Также плагин умеет блокировать телепортацию в определённые миры (например,
+# Ад или Энд), пока на сервере в сумме не будет выполнено нужное количество
+# достижений. Миры открываются автоматически и навсегда (или их можно
+# разблокировать вручную либо выдать временный пропуск отдельным игрокам).
+#
+# Есть встроенный GUI-топ игроков по количеству выполненных достижений.
+#
+# Команды
+# /topborder            - открыть GUI с топом игроков по достижениям (алиас /bordertop)
+# /borderreload         - перезагрузить конфигурацию и языковые файлы (право: borderachieve.admin)
+# /borderunlock <мир> [игрок] - разблокировать мир или выдать временный пропуск игроку
+# /borderlockstatus     - посмотреть статус блокировки миров (право: borderachieve.admin)
+# /borderdebug          - показать отладочную информацию (право: borderachieve.admin)
+# /borderachieve        - справка по плагину
+
+# PlaceholderAPI (если установлен)
+# %borderachieve_count%           – количество достижений у игрока
+# %borderachieve_rank%            – место игрока в топе
+# %borderachieve_total%           – общее количество выполненных достижений на сервере
+# %borderachieve_locked_<мир>%    – "true" или "false" – заблокирован ли мир
+
+# =====================================================
+
+# Язык плагина: ru или en
+language: ru
+
+# Основные настройки механики
+settings:
+  # Включить расширение границ за ачивки? 
+  # Если false, плагин работает только как топ/рейтинг по ачивкам.
+  enable_border_expansion: true
+
+  # На сколько блоков увеличивается граница в обычном мире при получении ачивки.
+  # В аду автоматически делится на 8 (например, 15.0 / 8 = 1.875)
+  expand_amount: 15.0
+
+  # Режим изменения границы:
+  #   smooth - плавное расширение за указанное время (граница движется всё время)
+  #   delay  - отложенное изменение (граница стоит, потом мгновенно расширяется)
+  border_change_mode: "smooth"
+
+  # Время для smooth или delay. Поддерживаются суффиксы:
+  #   t (тики), s (секунды), d (дни)
+  # Примеры: "20t", "1.5s", "1d"
+  border_move_speed: "200t"
+
+  # Автоматически устанавливать первоначальную границу при первом старте плагина?
+  set_initial_border_on_first_start: true
+
+  # Размер первоначальной границы (диаметр квадрата) в обычном мире.
+  # В аду автоматически поделится на 8 (35.0 / 8 = 4.375)
+  initial_border_size: 35.0
+
+  # Применять расширение ко ВСЕМ загруженным мирам автоматически?
+  # Если false, используется список allowed_worlds.
+  apply_to_all_worlds: true
+
+  # Список миров (используется только если apply_to_all_worlds = false)
+  allowed_worlds:
+    - "world"
+    - "world_nether"
+    - "world_the_end"
+
+  # Отправлять уведомление о новом размере границы только игроку, получившему ачивку (true)
+  # или всем игрокам на сервере (false)
+  notify_only_player: true
+
+  # Эффекты при расширении границы
+  effects:
+    # Звук при расширении. Название из списка Sound (например entity.ender_dragon.growl)
+    # Оставьте пустым, чтобы отключить звук.
+    sound: "entity.ender_dragon.growl"
+    # Громкость звука (0.0 - 1.0)
+    sound_volume: 0.8
+    # Высота тона (0.5 - 2.0)
+    sound_pitch: 1.0
+    # Показывать ли заголовок (Title) при расширении
+    title: true
+    # Показывать ли подзаголовок (Subtitle) с новым размером границы
+    subtitle: true
+
+# Настройки интерфейса топа (GUI)
+gui:
+  # Заголовок окна (поддерживаются HEX цвета)
+  title: "          &#42aa49Топ по ачивкам"
+  
+  # Слоты для голов игроков (инвентарь 54 слота)
+  slots: [10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43]
+
+  # Описание голов (работают цвета и плейсхолдеры "%rank%", "%score%")
+  lore:
+    self:
+      - "&#264933&m                                            "
+      - "&#42aa49Достижений: &#9dcb44%score%"
+      - ""
+      - "&#42aa49Нажмите, чтобы обновить"
+      - "&#264933&m                                            "
+    other:
+      - "&#264933&m                                            "
+      - "&#42aa49Достижений: &#9dcb44%score%"
+      - ""
+      - "&#42aa49Нажмите, чтобы обновить"
+      - "&#264933&m                                            "
+
+# ==================== НАСТРОЙКИ БЛОКИРОВКИ МИРОВ ====================
+# Блокировка миров до достижения определённого количества достижений на сервере.
+# Сообщения deny_message и unlock_broadcast настраиваются в языковых файлах (ru.yml / en.yml).
+world_locking:
+  # Включить механизм блокировки миров
+  enabled: true
+
+  # Если true – блокируются ВСЕ загруженные миры (все, что есть на сервере)
+  # Если false – блокируются только миры, перечисленные в секции worlds
+  apply_to_all_worlds_for_locking: false
+
+  # Порог достижений по умолчанию (используется, если в worlds не задан свой порог)
+  default_required: 64
+
+  # Индивидуальные пороги для конкретных миров (переопределяют default_required)
+  worlds:
+    world_nether:
+      required_achievements: 73
+    world_the_end:
+      required_achievements: 225
+
+  # Показывать ли Title при попытке входа в заблокированный мир
+  show_deny_title: true
+
+# Режим отладки – выводит подробную информацию в консоль
+debug: false
+
+# ==================== ENGLISH VERSION ====================
+
+# BorderAchieve – a plugin that links player advancements with dynamic world
+# border expansion and dimension locking.
+#
+# Whenever a player earns an advancement, the border in selected worlds
+# smoothly (or after a delay) expands by a configurable number of blocks.
+# In the Nether, the expansion is automatically divided by 8.
+#
+# The plugin can also lock teleportation to specific worlds (e.g., the Nether
+# or the End) until a server-wide total of completed advancements is reached.
+# Worlds unlock automatically and permanently (or can be unlocked manually,
+# or temporary access granted to individual players).
+#
+# Includes a built-in GUI leaderboard ranking players by completed advancements.
+#
+# Commands
+# /topborder            - open GUI with top players by achievements (alias /bordertop)
+# /borderreload         - reload configuration and language files (permission: borderachieve.admin)
+# /borderunlock <world> [player] - unlock world or grant temporary access to player
+# /borderlockstatus     - view world locking status (permission: borderachieve.admin)
+# /borderdebug          - show plugin debug info (permission: borderachieve.admin)
+# /borderachieve        - plugin help
+
+# PlaceholderAPI (if installed)
+# %borderachieve_count%           – player's achievement count
+# %borderachieve_rank%            – player's rank in leaderboard
+# %borderachieve_total%           – total completed achievements on server
+# %borderachieve_locked_<world>%  – "true" or "false" – whether world is locked
+
+# =====================================================
+
+# Plugin language: ru or en
+language: en
+
+# Core mechanics settings
+settings:
+  # Enable border expansion for achievements?
+  # If false, plugin works only as top/rating.
+  enable_border_expansion: true
+
+  # How many blocks the border expands in the overworld per achievement.
+  # In Nether automatically divided by 8 (e.g. 15.0 / 8 = 1.875)
+  expand_amount: 15.0
+
+  # Border change mode:
+  #   smooth - gradual expansion over specified time
+  #   delay  - delayed instant change (border stands still, then jumps)
+  border_change_mode: "smooth"
+
+  # Time for smooth or delay. Supported suffixes:
+  #   t (ticks), s (seconds), d (days)
+  # Examples: "20t", "1.5s", "1d"
+  border_move_speed: "200t"
+
+  # Automatically set initial border on first plugin start?
+  set_initial_border_on_first_start: true
+
+  # Initial border size (square diameter) in overworld.
+  # In Nether automatically divided by 8 (35.0 / 8 = 4.375)
+  initial_border_size: 35.0
+
+  # Apply expansion to ALL loaded worlds automatically?
+  # If false, uses allowed_worlds list.
+  apply_to_all_worlds: true
+
+  # List of worlds (used only if apply_to_all_worlds = false)
+  allowed_worlds:
+    - "world"
+    - "world_nether"
+    - "world_the_end"
+
+  # Send border size notification only to the player who got achievement (true)
+  # or to all players on the server (false)
+  notify_only_player: true
+
+  # Effects on border expansion
+  effects:
+    # Sound on expansion. Sound enum name (e.g. entity.ender_dragon.growl)
+    # Leave empty to disable.
+    sound: "entity.ender_dragon.growl"
+    # Volume (0.0 - 1.0)
+    sound_volume: 0.8
+    # Pitch (0.5 - 2.0)
+    sound_pitch: 1.0
+    # Show title on expansion
+    title: true
+    # Show subtitle with new size
+    subtitle: true
+
+# GUI settings
+gui:
+  # Window title (supports HEX colors)
+  title: "          &#42aa49Top Achievements"
+  
+  # Slots for player heads (inventory has 54 slots)
+  slots: [10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43]
+
+  # Head lore (supports colors and placeholders "%rank%", "%score%")
+  lore:
+    self:
+      - "&#264933&m                                            "
+      - "&#42aa49Achievements: &#9dcb44%score%"
+      - ""
+      - "&#42aa49Click to refresh"
+      - "&#264933&m                                            "
+    other:
+      - "&#264933&m                                            "
+      - "&#42aa49Achievements: &#9dcb44%score%"
+      - ""
+      - "&#42aa49Click to refresh"
+      - "&#264933&m                                            "
+
+# ==================== WORLD LOCKING SETTINGS ====================
+# Lock worlds until a certain total number of achievements is reached.
+# Messages deny_message and unlock_broadcast are configured in language files (ru.yml / en.yml).
+world_locking:
+  # Enable world locking
+  enabled: true
+
+  # If true – ALL loaded worlds are locked (all worlds on the server)
+  # If false – only worlds listed in the worlds section are locked
+  apply_to_all_worlds_for_locking: false
+
+  # Default achievement threshold (used if a world has no custom threshold in worlds)
+  default_required: 73
+
+  # Custom thresholds for specific worlds (override default_required)
+  worlds:
+    world_nether:
+      required_achievements: 73
+    world_the_end:
+      required_achievements: 225
+
+  # Show Title when trying to enter a locked world
+  show_deny_title: true
+
+# Debug mode – logs detailed info to console
+debug: false

@@ -1,0 +1,49 @@
+messages:
+  expanded: "&#42aa49[!] &e%player% &#9dcb44выполнил достижение! Граница расширена на +%amount% бл."
+  border_expanded_info: "&#42aa49[!] &#9dcb44Граница мира %world% расширена до %new_size% блоков!"
+  border_expanded_actionbar: "&#42aa49Граница мира %world% → %new_size% блоков"
+  border_delayed_info: "&aГраница мира %world% расширится до %new_size% блоков через задержку!"
+  reloaded: "&#42aa49[BorderAchieve] Плагин успешно перезагружен!"
+  no_perm: "&cУ вас нет прав на использование этой команды."
+  help_header: "&#42aa49[BorderAchieve] Команды:"
+
+gui:
+  title: "          &#42aa49Топ по ачивкам"
+  rank_format: "&#42aa49#%rank% &#9dcb44%player%"
+  self_rank_format: "&#42aa49#0 &#9dcb44%player%"
+  lore:
+    self:
+      - "&#264933&m                                            "
+      - "&#42aa49Достижений: &#9dcb44%score%"
+      - ""
+      - "&#42aa49Нажмите, чтобы обновить"
+      - "&#264933&m                                            "
+    other:
+      - "&#264933&m                                            "
+      - "&#42aa49Достижений: &#9dcb44%score%"
+      - ""
+      - "&#42aa49Нажмите, чтобы обновить"
+      - "&#264933&m                                            "
+
+log:
+  enabled: "BorderAchieve успешно запущен и готов к работе!"
+  player_advancement: "Игрок %player% получил ачивку: %adv%"
+  mode_info: "Режим: %mode%, +%amount% блоков, время: %ticks% тиков"
+  world_expanding_corrected: "World %world%: добавлено %added% блоков, новая цель %new_target%, осталось %remaining_sec% сек"
+  world_border_status: "Мир %world%: текущий размер = %current%, целевой = %target%, прирост = %expand%"
+  world_instant_set: "Мир %world%: граница мгновенно установлена на %target%"
+  world_expanding: "Мир %world%: граница расширяется до %target% за %seconds% секунд"
+  initial_border_set: "Установлена начальная граница для мира %world%: %size%"
+  initial_border_done: "Первоначальные границы миров зафиксированы на %size% бл."
+  invalid_format: "Неверный формат border_move_speed: '%input%'. Поддерживаются только t/s/d. Используется 20t"
+  speed_parsed: "border_move_speed = %input% → %ticks% тиков"
+
+world_locking:
+  deny_message: "&#c43d3d[!] &#e04e4eМир %world% закрыт! Нужно %required% достижений на сервере (сейчас %current%)."
+  unlock_broadcast: "&#42aa49[!] &#9dcb44Мир %world% открыт! Набрано %required% достижений."
+  deny_title: "&#c43d3dДоступ запрещён"
+  deny_subtitle: "&#e04e4eНужно %required% достижений (сейчас %current%)"
+
+effects:
+  title: "&#42aa49Граница расширена"
+  subtitle: "Новый размер: %new_size% блоков"

@@ -1,0 +1,49 @@
+messages:
+  expanded: "&#42aa49[!] &e%player% &#9dcb44completed an achievement! Border expanded by +%amount% blocks."
+  border_expanded_info: "&#42aa49[!] &#9dcb44Border of world %world% expanded to %new_size% blocks!"
+  border_expanded_actionbar: "&#42aa49Border of %world% → %new_size% blocks"
+  border_delayed_info: "&aBorder of world %world% will expand to %new_size% blocks after delay!"
+  reloaded: "&#42aa49[BorderAchieve] Plugin reloaded successfully!"
+  no_perm: "&cYou do not have permission to use this command."
+  help_header: "&#42aa49[BorderAchieve] Commands:"
+
+gui:
+  title: "          &#42aa49Top Achievements"
+  rank_format: "&#42aa49#%rank% &#9dcb44%player%"
+  self_rank_format: "&#42aa49#0 &#9dcb44%player%"
+  lore:
+    self:
+      - "&#264933&m                                            "
+      - "&#42aa49Your score: &#9dcb44%score%"
+      - ""
+      - "&#42aa49Click to refresh"
+      - "&#264933&m                                            "
+    other:
+      - "&#264933&m                                            "
+      - "&#42aa49Score: &#9dcb44%score%"
+      - ""
+      - "&#42aa49Click to refresh"
+      - "&#264933&m                                            "
+
+log:
+  enabled: "BorderAchieve has been enabled and is ready!"
+  player_advancement: "Player %player% got advancement: %adv%"
+  mode_info: "Mode: %mode%, +%amount% blocks, time: %ticks% ticks"
+  world_expanding_corrected: "World %world%: added %added% blocks, new target %new_target%, remaining %remaining_sec% sec"
+  world_border_status: "World %world%: current size = %current%, target = %target%, expand = %expand%"
+  world_instant_set: "World %world%: border instantly set to %target%"
+  world_expanding: "World %world%: border expanding to %target% over %seconds% seconds"
+  initial_border_set: "Initial border set for world %world%: %size%"
+  initial_border_done: "Initial world borders set to %size% blocks."
+  invalid_format: "Invalid format for border_move_speed: '%input%'. Only t/s/d supported. Using 20t"
+  speed_parsed: "border_move_speed = %input% → %ticks% ticks"
+
+world_locking:
+  deny_message: "&#c43d3d[!] &#e04e4eWorld %world% is locked! Need %required% total achievements (currently %current%)."
+  unlock_broadcast: "&#42aa49[!] &#9dcb44World %world% unlocked! %required% achievements reached."
+  deny_title: "&#c43d3dAccess Denied"
+  deny_subtitle: "&#e04e4eNeed %required% achievements (currently %current%)"
+
+effects:
+  title: "&#42aa49Border Expanded"
+  subtitle: "New size: %new_size% blocks"
